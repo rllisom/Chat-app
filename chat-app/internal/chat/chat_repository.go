@@ -48,7 +48,7 @@ func (r *ChatRepository) FindRoomByID(id string) (*Room,error){
 	}
 	var room Room
 
-	if err := r.rooms.FindOne(ctx,objectID).Decode(&room); err != nil {
+	if err := r.rooms.FindOne(ctx, bson.M{"_id": objectID}).Decode(&room); err != nil {
 		if errors.Is(err,mongo.ErrNoDocuments){
 			return nil, errors.New("Chat no encontrado")
 		}

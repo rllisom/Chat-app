@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "chat-app/proto";
+
+service ChatService {
+    rpc CreateRoom      (CreateRoomRequest)      returns (RoomResponse);
+    rpc GetAllRooms     (GetAllRoomsRequest)      returns (GetAllRoomsResponse);
+    rpc SendMessage     (SendMessageRequest)      returns (MessageResponse);
+    rpc GetRoomMessages (GetRoomMessagesRequest)  returns (GetRoomMessagesResponse);
+}
+
+// ── Rooms ─────────────────────────────────────────────────
+
+message CreateRoomRequest {
+    string name       = 1;
+    string created_by = 2;
+}
+
+message GetAllRoomsRequest {}
+
+message RoomResponse {
+    string id         = 1;
+    string name       = 2;
+    string created_by = 3;
+    string created_at = 4;
+}
+
+message GetAllRoomsResponse {
+    repeated RoomResponse rooms = 1;
+}
+
+// ── Messages ──────────────────────────────────────────────
+
+message SendMessageRequest {
+    string room_id  = 1;
+    string user_id  = 2;
+    string username = 3;
+    string content  = 4;
+}
+
+message GetRoomMessagesRequest {
+    string room_id = 1;
+}
+
+message MessageResponse {
+    string id       = 1;
+    string room_id  = 2;
+    string user_id  = 3;
+    string username = 4;
+    string content  = 5;
+    string sent_at  = 6;
+}
+
+message GetRoomMessagesResponse {
+    repeated MessageResponse messages = 1;
+}
